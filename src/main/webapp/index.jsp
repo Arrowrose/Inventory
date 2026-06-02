@@ -14,10 +14,10 @@
     <div class="card shadow-sm p-4">
         <h2>Функции системы</h2>
         <div class="list-group mt-3">
-            <a href="#" class="list-group-item list-group-item-action list-group-item-primary">
+            <a href="/Inventory/audience" class="list-group-item list-group-item-action list-group-item-primary">
                 🪑 Аудитории
             </a>
-            <a href="#" class="list-group-item list-group-item-action list-group-item-info">
+            <a href="/Inventory/inventory" class="list-group-item list-group-item-action list-group-item-info">
                 📦 Инвентарь
             </a>
         </div>
