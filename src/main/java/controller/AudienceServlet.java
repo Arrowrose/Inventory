@@ -6,31 +6,20 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 @WebServlet("/audience")
 public class AudienceServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     
-    public AudienceServlet() {
-        super();
-    }
-    
     protected void doGet(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
-        response.setContentType("text/html");
-        PrintWriter writer = response.getWriter();
-        try {
-            writer.println("<h2>ПРИВЕТ! Это сервлет для работы с АУДИТОРИЯМИ</h2>");
-            writer.println("<p>Вариант 20. Здесь будет список аудиторий</p>");
-            writer.println("<a href='/Inventory/'>На главную</a>");
-        } finally {
-            writer.close();
-        }
+        // Перенаправляем на JSP страницу
+        request.getRequestDispatcher("/views/audiences.jsp").forward(request, response);
     }
     
     protected void doPost(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
+        // Пока просто перенаправляем на GET (для добавления позже)
         doGet(request, response);
     }
 }
