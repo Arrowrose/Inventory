@@ -39,8 +39,11 @@
                                 <td>${audience.id}</td>
                                 <td>${audience.number}</td>
                                 <td>${audience.responsible}</td>
-                                <td>
-                                    <a href="#" class="btn btn-outline-primary btn-sm">✏️</a>
+                                <td width="20">
+                                    <a href="${pageContext.request.contextPath}/editAudience?id=${audience.id}" 
+								       class="btn btn-outline-primary btn-sm">
+								        ✏️
+								    </a>
                                 </td>
                                 <td>
                                     <a href="?delete=${audience.id}" 

@@ -97,18 +97,17 @@ public class InventoryDbDAO implements RepositoryDAO<Inventory> {
     @Override
     public void update(Inventory inventory) throws SQLException {
         try (Connection con = getConnection();
-             PreparedStatement pst = con.prepareStatement(UPDATE)) {
+             PreparedStatement pst = con.prepareStatement(
+                 "UPDATE inventory_items SET inventory_number = ?, name = ?, quantity = ?, description = ?, id_audience = ? WHERE id = ?")) {
             pst.setString(1, inventory.getInventoryNumber());
             pst.setString(2, inventory.getName());
             pst.setInt(3, inventory.getQuantity());
             pst.setString(4, inventory.getDescription());
-            
             if (inventory.getIdAudience() != null) {
                 pst.setLong(5, inventory.getIdAudience());
             } else {
                 pst.setNull(5, java.sql.Types.BIGINT);
             }
-            
             pst.setLong(6, inventory.getId());
             pst.executeUpdate();
         }

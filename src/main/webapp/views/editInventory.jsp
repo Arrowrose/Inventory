@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Инвентарь</title>
+    <title>Редактирование инвентаря</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
 </head>
 <body>
@@ -15,19 +15,14 @@
     
     <div class="container-fluid">
         <div class="row justify-content-start">
-            <!-- Таблица списка инвентаря -->
-            <div class="col-8 border bg-light px-4">
+            <!-- Таблица со списком инвентаря -->
+            <div class="col-6 border bg-light px-4">
                 <h3>Список инвентаря</h3>
-                
-                <c:if test="${not empty error}">
-                    <div class="alert alert-danger">${error}</div>
-                </c:if>
-                
                 <table class="table table-bordered table-striped">
                     <thead class="table-dark">
                         <tr>
-                            <th>ID</th><th>Инв. номер</th><th>Название</th>
-                            <th>Кол-во</th><th>Аудитория</th><th>✏️</th><th>🗑️</th>
+                            <th>ID</th><th>Инв.номер</th><th>Название</th>
+                            <th>Кол-во</th><th>Аудитория</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -38,58 +33,63 @@
                                 <td>${item.name}</td>
                                 <td>${item.quantity}</td>
                                 <td>${item.audience.number}</td>
-                                <td width="20">
-								    <a href="${pageContext.request.contextPath}/editInventory?id=${item.id}" 
-								       class="btn btn-outline-primary btn-sm">
-								        ✏️
-								    </a>
-								</td>
-                                <td>
-                                    <a href="?delete=${item.id}" 
-                                       class="btn btn-outline-danger btn-sm"
-                                       onclick="return confirm('Удалить ${item.name}?')">
-                                        🗑️
-                                    </a>
-                                </td>
                             </tr>
                         </c:forEach>
-                        <c:if test="${empty inventories}">
-                            <tr><td colspan="7" class="text-center">Нет данных</td></tr>
-                        </c:if>
                     </tbody>
                 </table>
             </div>
             
-            <!-- Форма добавления нового инвентаря -->
-            <div class="col-4 border px-4">
-                <form method="POST" action="${pageContext.request.contextPath}/inventory">
-                    <h3>Новый инвентарь</h3>
+            <!-- Форма редактирования -->
+            <div class="col-6 border px-4">
+                <form method="POST" action="${pageContext.request.contextPath}/editInventory">
+                    <h3>Редактирование инвентаря</h3>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Код</label>
+                        <input type="text" class="form-control" readonly 
+                               value="${inventoryEdit.id}">
+                        <input type="hidden" name="id" value="${inventoryEdit.id}">
+                    </div>
+                    
                     <div class="mb-3">
                         <label class="form-label">Инвентарный номер</label>
-                        <input type="text" name="inventoryNumber" class="form-control" required/>
+                        <input type="text" name="inventoryNumber" class="form-control" 
+                               value="${inventoryEdit.inventoryNumber}" required>
                     </div>
+                    
                     <div class="mb-3">
                         <label class="form-label">Название</label>
-                        <input type="text" name="name" class="form-control" required/>
+                        <input type="text" name="name" class="form-control" 
+                               value="${inventoryEdit.name}" required>
                     </div>
+                    
                     <div class="mb-3">
                         <label class="form-label">Количество</label>
-                        <input type="number" name="quantity" class="form-control" value="0"/>
+                        <input type="number" name="quantity" class="form-control" 
+                               value="${inventoryEdit.quantity}">
                     </div>
+                    
                     <div class="mb-3">
                         <label class="form-label">Описание</label>
-                        <textarea name="description" class="form-control" rows="2"></textarea>
+                        <textarea name="description" class="form-control" rows="3">${inventoryEdit.description}</textarea>
                     </div>
+                    
                     <div class="mb-3">
                         <label class="form-label">Аудитория</label>
                         <select name="idAudience" class="form-control">
                             <option value="">-- Выберите аудиторию --</option>
                             <c:forEach var="audience" items="${audiences}">
-                                <option value="${audience.id}">${audience.number}</option>
+                                <option value="${audience.id}" 
+                                    ${inventoryEdit.idAudience == audience.id ? 'selected' : ''}>
+                                    ${audience.number}
+                                </option>
                             </c:forEach>
                         </select>
                     </div>
-                    <button type="submit" class="btn btn-primary">Добавить</button>
+                    
+                    <button type="submit" class="btn btn-primary">Сохранить</button>
+                    <a href="${pageContext.request.contextPath}/inventory" 
+                       class="btn btn-secondary">Отмена</a>
                 </form>
             </div>
         </div>

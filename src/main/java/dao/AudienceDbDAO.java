@@ -70,7 +70,8 @@ public class AudienceDbDAO implements RepositoryDAO<Audience> {
     @Override
     public void update(Audience audience) throws SQLException {
         try (Connection con = getConnection();
-             PreparedStatement pst = con.prepareStatement(UPDATE)) {
+             PreparedStatement pst = con.prepareStatement(
+                 "UPDATE audiences SET number = ?, responsible = ? WHERE id = ?")) {
             pst.setString(1, audience.getNumber());
             pst.setString(2, audience.getResponsible());
             pst.setLong(3, audience.getId());
@@ -86,6 +87,7 @@ public class AudienceDbDAO implements RepositoryDAO<Audience> {
             pst.executeUpdate();
         }
     }
+    
     
     private Audience fillAudience(ResultSet rs) throws SQLException {
         Audience audience = new Audience();
