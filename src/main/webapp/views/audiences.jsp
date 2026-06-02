@@ -15,6 +15,7 @@
     
     <div class="container-fluid">
         <div class="row justify-content-start">
+            <!-- Таблица списка аудиторий -->
             <div class="col-8 border bg-light px-4">
                 <h3>Список аудиторий</h3>
                 
@@ -24,7 +25,13 @@
                 
                 <table class="table table-bordered table-striped">
                     <thead class="table-dark">
-                        <tr><th>Код</th><th>Номер аудитории</th><th>Ответственный</th><th>✏️</th><th>🗑️</th></tr>
+                        <tr>
+                            <th>Код</th>
+                            <th>Номер аудитории</th>
+                            <th>Ответственный</th>
+                            <th>✏️</th>
+                            <th>🗑️</th>
+                        </tr>
                     </thead>
                     <tbody>
                         <c:forEach var="audience" items="${audiences}">
@@ -32,8 +39,16 @@
                                 <td>${audience.id}</td>
                                 <td>${audience.number}</td>
                                 <td>${audience.responsible}</td>
-                                <td><a href="#" class="btn btn-outline-primary btn-sm">✏️</a></td>
-                                <td><a href="#" class="btn btn-outline-danger btn-sm">🗑️</a></td>
+                                <td>
+                                    <a href="#" class="btn btn-outline-primary btn-sm">✏️</a>
+                                </td>
+                                <td>
+                                    <a href="?delete=${audience.id}" 
+                                       class="btn btn-outline-danger btn-sm"
+                                       onclick="return confirm('Удалить аудиторию ${audience.number}?')">
+                                        🗑️
+                                    </a>
+                                </td>
                             </tr>
                         </c:forEach>
                         <c:if test="${empty audiences}">
@@ -43,8 +58,9 @@
                 </table>
             </div>
             
+            <!-- Форма добавления новой аудитории -->
             <div class="col-4 border px-4">
-                <form method="POST" action="">
+                <form method="POST" action="${pageContext.request.contextPath}/audience">
                     <h3>Новая аудитория</h3>
                     <div class="mb-3">
                         <label class="form-label">Номер аудитории</label>

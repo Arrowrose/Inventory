@@ -15,6 +15,7 @@
     
     <div class="container-fluid">
         <div class="row justify-content-start">
+            <!-- Таблица списка инвентаря -->
             <div class="col-8 border bg-light px-4">
                 <h3>Список инвентаря</h3>
                 
@@ -24,8 +25,10 @@
                 
                 <table class="table table-bordered table-striped">
                     <thead class="table-dark">
-                        <tr><th>ID</th><th>Инв. номер</th><th>Название</th>
-                        <th>Кол-во</th><th>Аудитория</th><th>✏️</th><th>🗑️</th></tr>
+                        <tr>
+                            <th>ID</th><th>Инв. номер</th><th>Название</th>
+                            <th>Кол-во</th><th>Аудитория</th><th>✏️</th><th>🗑️</th>
+                        </tr>
                     </thead>
                     <tbody>
                         <c:forEach var="item" items="${inventories}">
@@ -36,7 +39,13 @@
                                 <td>${item.quantity}</td>
                                 <td>${item.audience.number}</td>
                                 <td><a href="#" class="btn btn-outline-primary btn-sm">✏️</a></td>
-                                <td><a href="#" class="btn btn-outline-danger btn-sm">🗑️</a></td>
+                                <td>
+                                    <a href="?delete=${item.id}" 
+                                       class="btn btn-outline-danger btn-sm"
+                                       onclick="return confirm('Удалить ${item.name}?')">
+                                        🗑️
+                                    </a>
+                                </td>
                             </tr>
                         </c:forEach>
                         <c:if test="${empty inventories}">
@@ -46,8 +55,9 @@
                 </table>
             </div>
             
+            <!-- Форма добавления нового инвентаря -->
             <div class="col-4 border px-4">
-                <form method="POST" action="">
+                <form method="POST" action="${pageContext.request.contextPath}/inventory">
                     <h3>Новый инвентарь</h3>
                     <div class="mb-3">
                         <label class="form-label">Инвентарный номер</label>
@@ -59,7 +69,7 @@
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Количество</label>
-                        <input type="number" name="quantity" class="form-control" />
+                        <input type="number" name="quantity" class="form-control" value="0"/>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Описание</label>
